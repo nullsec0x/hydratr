@@ -1,0 +1,352 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - Hydratr{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto fade-in">
+    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 mb-8 water-card relative overflow-hidden">
+
+        
+        <div class="relative z-10">
+            <div class="flex items-center justify-between mb-6">
+                <h2 class="text-xl font-bold flex items-center">
+                    <i class="fas fa-calendar-day text-blue-500 mr-3"></i>
+                    Today's Hydration Progress
+                </h2>
+                <div class="text-sm text-gray-500 dark:text-gray-400">
+                    {{ today_entries|length }} logs today
+                </div>
+            </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div class="space-y-4">
+                <div class="text-center p-6 bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-blue-900/20 dark:to-cyan-900/20 rounded-xl border border-blue-100 dark:border-blue-800/30">
+                    <div class="inline-flex items-center justify-center w-12 h-12 bg-blue-500 rounded-full mb-3">
+                        <i class="fas fa-tint text-white text-lg"></i>
+                    </div>
+                    <p class="text-3xl font-bold text-blue-600 dark:text-blue-400 mb-1">{{ today_amount }}ml</p>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">Current Intake</p>
+                    <div class="mt-2 text-xs text-blue-600 dark:text-blue-400">
+                        {% set remaining = current_user.daily_goal - today_amount %}
+                        {% if remaining > 0 %}
+                            {{ remaining }}ml remaining
+                        {% else %}
+                            Goal achieved! 🎉
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <div class="text-center p-6 bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 rounded-xl border border-green-100 dark:border-green-800/30">
+                    <div class="inline-flex items-center justify-center w-12 h-12 bg-green-500 rounded-full mb-3">
+                        <i class="fas fa-fire text-white text-lg"></i>
+                    </div>
+                    <p class="text-2xl font-bold text-green-600 dark:text-green-400 mb-1">{{ streak }} days</p>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">Current Streak</p>
+                    <div class="mt-2 text-xs text-green-600 dark:text-green-400">
+                        Keep it up!
+                    </div>
+                </div>
+            </div>
+            
+            <div class="space-y-4">
+                <div class="p-6 bg-gradient-to-br from-gray-50 to-slate-50 dark:from-gray-700 dark:to-slate-700 rounded-xl border border-gray-200 dark:border-gray-600">
+                    <div class="flex justify-between items-center mb-3">
+                        <span class="text-sm font-medium flex items-center">
+                            <i class="fas fa-chart-line text-blue-500 mr-2"></i>
+                            Daily Progress
+                        </span>
+                        <span class="text-sm font-bold text-blue-600 dark:text-blue-400">
+                            {{ (today_amount / current_user.daily_goal * 100) | round(1) if current_user.daily_goal > 0 else 0 }}%
+                        </span>
+                    </div>
+                    <div class="w-full bg-gray-200 dark:bg-gray-600 rounded-full h-6 mb-3 overflow-hidden">
+                        <div id="progress-bar"
+                             data-progress="{{ progress|default(0)|tojson|safe }}"
+                             class="bg-gradient-to-r from-blue-500 to-cyan-500 h-6 rounded-full progress-bar wave-animation transition-all duration-1000 ease-out flex items-center justify-end pr-2">
+                            <span class="text-xs text-white font-medium">
+                                {% if (today_amount / current_user.daily_goal * 100) > 15 %}
+                                    {{ (today_amount / current_user.daily_goal * 100) | round(0) }}%
+                                {% endif %}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="flex justify-between text-xs text-gray-500 dark:text-gray-400">
+                        <span>0ml</span>
+                        <span>{{ current_user.daily_goal }}ml goal</span>
+                    </div>
+                </div>
+                
+                <div class="p-4 bg-gradient-to-br from-yellow-50 to-amber-50 dark:from-yellow-900/20 dark:to-amber-900/20 rounded-xl border border-yellow-200 dark:border-yellow-800/30">
+                    <div class="flex items-start space-x-3">
+                        <div class="flex-shrink-0">
+                            <i class="fas fa-lightbulb text-yellow-600 dark:text-yellow-400 text-lg"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm font-medium text-yellow-800 dark:text-yellow-200 mb-1">Daily Tip</p>
+                            <p class="text-sm text-yellow-700 dark:text-yellow-300">{{ message }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <form method="POST" action="{{ url_for('dashboard.log_water') }}" class="mb-6">
+            <div class="bg-gradient-to-r from-blue-50 to-cyan-50 dark:from-blue-900/10 dark:to-cyan-900/10 rounded-xl p-4 border border-blue-100 dark:border-blue-800/30">
+                <h3 class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3 flex items-center">
+                    <i class="fas fa-plus-circle text-blue-500 mr-2"></i>
+                    Log Water Intake
+                </h3>
+                <div class="flex flex-col sm:flex-row gap-3">
+                    <input type="number" name="amount" placeholder="Amount in ml" min="1" required 
+                           class="flex-1 p-4 border border-gray-300 dark:border-gray-600 rounded-xl dark:bg-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 hover:border-blue-400">
+                    <button type="submit" class="btn-primary p-4 rounded-xl font-semibold whitespace-nowrap">
+                        <i class="fas fa-plus mr-2"></i> Log Water
+                    </button>
+                </div>
+            </div>
+        </form>
+
+        <div class="mb-6">
+            <h3 class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3 flex items-center">
+                <i class="fas fa-bolt text-yellow-500 mr-2"></i>
+                Quick Log Options
+            </h3>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                {% for amt in [250, 500, 1000, 1500] %}
+                <button type="button" class="group p-4 bg-white dark:bg-gray-700 border-2 border-gray-200 dark:border-gray-600 rounded-xl text-center transition-all duration-200 hover:border-blue-400 hover:shadow-lg hover:scale-105 active:scale-95 quick-log"
+                        data-amt="{{ amt|tojson|safe }}">
+                    {% if amt == 250 %}
+                    <div class="w-8 h-8 mx-auto mb-2 text-blue-500 group-hover:text-blue-600 transition-colors">
+                        <i class="fas fa-glass-water text-2xl"></i>
+                    </div>
+                    <p class="font-medium text-gray-800 dark:text-gray-200">{{ amt }}ml</p>
+                    <p class="text-xs text-gray-500 dark:text-gray-400">Small Glass</p>
+                    {% elif amt == 500 %}
+                    <div class="w-8 h-8 mx-auto mb-2 text-blue-500 group-hover:text-blue-600 transition-colors">
+                        <i class="fas fa-bottle-water text-2xl"></i>
+                    </div>
+                    <p class="font-medium text-gray-800 dark:text-gray-200">{{ amt }}ml</p>
+                    <p class="text-xs text-gray-500 dark:text-gray-400">Bottle</p>
+                    {% elif amt == 1000 %}
+                    <div class="w-8 h-8 mx-auto mb-2 text-blue-500 group-hover:text-blue-600 transition-colors">
+                        <i class="fas fa-wine-bottle text-2xl"></i>
+                    </div>
+                    <p class="font-medium text-gray-800 dark:text-gray-200">{{ amt // 1000 }}L</p>
+                    <p class="text-xs text-gray-500 dark:text-gray-400">Large Bottle</p>
+                    {% else %}
+                    <div class="w-8 h-8 mx-auto mb-2 text-blue-500 group-hover:text-blue-600 transition-colors">
+                        <i class="fas fa-tint text-2xl"></i>
+                    </div>
+                    <p class="font-medium text-gray-800 dark:text-gray-200">1.5L</p>
+                    <p class="text-xs text-gray-500 dark:text-gray-400">Big Bottle</p>
+                    {% endif %}
+                </button>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="bg-gradient-to-br from-gray-50 to-slate-50 dark:from-gray-700 dark:to-slate-700 rounded-xl p-6 border border-gray-200 dark:border-gray-600">
+            <h3 class="font-medium mb-4 flex items-center justify-between">
+                <span class="flex items-center">
+                    <i class="fas fa-history text-gray-500 mr-2"></i>
+                    Today's Activity Log
+                </span>
+                {% if today_entries %}
+                <span class="text-xs text-gray-500 dark:text-gray-400 bg-gray-200 dark:bg-gray-600 px-2 py-1 rounded-full">
+                    {{ today_entries|length }} entries
+                </span>
+                {% endif %}
+            </h3>
+            {% if today_entries %}
+                <div class="space-y-3 max-h-64 overflow-y-auto">
+                    {% for entry in today_entries %}
+                    <div class="flex justify-between items-center p-4 bg-white dark:bg-gray-600 rounded-lg border border-gray-100 dark:border-gray-500 hover:shadow-md transition-shadow">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-10 h-10 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center">
+                                <i class="fas fa-tint text-blue-500 text-sm"></i>
+                            </div>
+                            <div>
+                                <span class="font-medium text-gray-800 dark:text-gray-200">{{ entry.amount }}ml</span>
+                                <div class="text-sm text-gray-500 dark:text-gray-400">
+                                    {{ entry.created_at.strftime('%H:%M') }}
+                                    <span class="mx-1">•</span>
+                                    {{ entry.created_at.strftime('%b %d') }}
+                                </div>
+                            </div>
+                        </div>
+                        <button type="button" class="text-red-400 hover:text-red-600 p-2 rounded-full hover:bg-red-50 dark:hover:bg-red-900/20 transition-all delete-entry" data-entry-id="{{ entry.id }}">
+                            <i class="fas fa-trash text-sm"></i>
+                        </button>
+                    </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="text-center py-8">
+                    <div class="w-16 h-16 bg-gray-200 dark:bg-gray-600 rounded-full flex items-center justify-center mx-auto mb-3">
+                        <i class="fas fa-tint text-gray-400 text-xl"></i>
+                    </div>
+                    <p class="text-gray-500 dark:text-gray-400 mb-2">No logs yet today</p>
+                    <p class="text-sm text-gray-400 dark:text-gray-500">Start hydrating to see your progress!</p>
+                </div>
+            {% endif %}
+        </div>
+        </div>
+    </div>
+    
+    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 water-card">
+        <h2 class="text-xl font-bold mb-6 flex items-center">
+            <i class="fas fa-chart-line text-green-500 mr-3"></i>
+            Weekly Progress
+        </h2>
+        <div class="chart-container">
+            <canvas id="hydrationChart"
+                    data-labels='{{ chart_labels|tojson|safe }}'
+                    data-values='{{ chart_data|tojson|safe }}'
+                    data-goals='{{ chart_goals|tojson|safe }}'></canvas>
+        </div>
+    </div>
+</div>
+
+<script>
+    function quickLog(amount) {
+        const n = Number(amount);
+        document.querySelector('input[name="amount"]').value = n;
+        document.querySelector('form').submit();
+    }
+
+    function deleteEntry(entryId) {
+        if (!entryId && entryId !== 0) return;
+        fetch('/delete-entry/' + entryId, {
+            method: 'POST',
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                'Content-Type': 'application/json',
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                location.reload();
+            } else {
+                alert('Error deleting entry');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error deleting entry');
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const progressEl = document.getElementById('progress-bar');
+        if (progressEl) {
+            const progress = Number(progressEl.dataset.progress || 0);
+            progressEl.style.width = progress + '%';
+        }
+
+        document.querySelectorAll('.quick-log').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const amt = btn.dataset.amt;
+                quickLog(amt);
+            });
+        });
+
+        document.querySelectorAll('.delete-entry').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const id = btn.dataset.entryId;
+                if (confirm('Are you sure you want to delete this entry?')) {
+                    deleteEntry(id);
+                }
+            });
+        });
+
+        const canvas = document.getElementById('hydrationChart');
+        if (canvas) {
+            const labels = JSON.parse(canvas.dataset.labels || '[]');
+            const chartData = JSON.parse(canvas.dataset.values || '[]');
+            const chartGoals = JSON.parse(canvas.dataset.goals || '[]');
+
+            new Chart(canvas.getContext('2d'), {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: 'Actual Intake',
+                            data: chartData,
+                            backgroundColor: 'rgba(59, 130, 246, 0.7)',
+                            borderColor: 'rgba(59, 130, 246, 1)',
+                            borderWidth: 1,
+                            borderRadius: 6,
+                            borderSkipped: false,
+                        },
+                        {
+                            label: 'Daily Goal',
+                            data: chartGoals,
+                            type: 'line',
+                            fill: false,
+                            borderColor: 'rgba(239, 68, 68, 1)',
+                            borderWidth: 2,
+                            pointRadius: 4,
+                            pointBackgroundColor: 'rgba(239, 68, 68, 1)',
+                            tension: 0.1
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Milliliters (ml)'
+                            },
+                            ticks: {
+                                callback: function(value) {
+                                    return value + 'ml';
+                                }
+                            },
+                            grid: {
+                                color: 'rgba(0, 0, 0, 0.1)'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Day of Week'
+                            },
+                            grid: {
+                                display: false
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                usePointStyle: true,
+                            }
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                            titleFont: {
+                                size: 14
+                            },
+                            bodyFont: {
+                                size: 13
+                            },
+                            callbacks: {
+                                label: function(context) {
+                                    return context.dataset.label + ': ' + context.raw + 'ml';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+    });
+</script>
+{% endblock %}

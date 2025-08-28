@@ -1,0 +1,140 @@
+{% extends "base.html" %}
+
+{% block title %}Profile - Hydratr{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto fade-in">
+    <!-- Profile Header -->
+    <div class="bg-gradient-to-r from-blue-500 to-cyan-500 rounded-2xl p-8 text-white shadow-xl mb-8 water-card">
+        <div class="flex items-center space-x-6">
+            <div class="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm">
+                <i class="fas fa-user text-3xl text-white"></i>
+            </div>
+            <div>
+                <h1 class="text-3xl font-bold mb-2">{{ current_user.username }}</h1>
+                <p class="opacity-90">Member since {{ current_user.created_at.strftime('%B %Y') }}</p>
+                <div class="flex items-center mt-2 space-x-4">
+                    <span class="bg-white/20 px-3 py-1 rounded-full text-sm">
+                        <i class="fas fa-tint mr-1"></i> {{ current_user.daily_goal }}ml daily goal
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <!-- Settings Panel -->
+        <div class="lg:col-span-2">
+            <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 mb-8 water-card">
+                <h2 class="text-xl font-bold mb-6 flex items-center">
+                    <i class="fas fa-cog text-blue-500 mr-3"></i>
+                    Account Settings
+                </h2>
+                
+                <form method="POST" action="{{ url_for('dashboard.profile') }}" class="space-y-6">
+                    <div class="grid grid-cols-1 gap-6">
+                        <div>
+                            <label for="daily_goal" class="block text-sm font-medium mb-3 text-gray-700 dark:text-gray-300">
+                                <i class="fas fa-bullseye text-blue-500 mr-2"></i>
+                                Daily Water Goal
+                            </label>
+                            <div class="relative">
+                                <input type="number" id="daily_goal" name="daily_goal" value="{{ current_user.daily_goal }}" min="500" max="10000" required 
+                                       class="w-full p-4 border border-gray-300 dark:border-gray-600 rounded-xl dark:bg-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 hover:border-blue-400">
+                                <span class="absolute right-4 top-4 text-gray-500 dark:text-gray-400">ml</span>
+                            </div>
+                            <p class="text-sm text-gray-500 dark:text-gray-400 mt-2 flex items-center">
+                                <i class="fas fa-info-circle mr-1"></i>
+                                Recommended: 2000-3000ml per day
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-gradient-to-br from-gray-50 to-slate-50 dark:from-gray-700 dark:to-slate-700 rounded-xl p-6 border border-gray-200 dark:border-gray-600">
+                        <h3 class="text-lg font-medium mb-4 flex items-center">
+                            <i class="fas fa-user-circle text-gray-500 mr-2"></i>
+                            Account Information
+                        </h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-10 h-10 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center">
+                                    <i class="fas fa-user text-blue-500 text-sm"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-gray-500 dark:text-gray-400">Username</p>
+                                    <p class="font-medium">{{ current_user.username }}</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center space-x-3">
+                                <div class="w-10 h-10 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center">
+                                    <i class="fas fa-envelope text-green-500 text-sm"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-gray-500 dark:text-gray-400">Email</p>
+                                    <p class="font-medium">{{ current_user.email }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn-primary p-4 rounded-xl font-semibold w-full md:w-auto">
+                        <i class="fas fa-save mr-2"></i>
+                        Save Changes
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Stats Sidebar -->
+        <div class="space-y-6">
+            <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 water-card">
+                <h3 class="text-lg font-bold mb-4 flex items-center">
+                    <i class="fas fa-chart-bar text-green-500 mr-2"></i>
+                    Your Stats
+                </h3>
+            <div class="bg-blue-50 dark:bg-blue-900 p-4 rounded text-center">
+                <p class="text-2xl font-bold">{{ current_user.get_streak() }}</p>
+                <p class="text-sm">Day Streak</p>
+            </div>
+            
+            <div class="bg-green-50 dark:bg-green-900 p-4 rounded text-center">
+                <p class="text-2xl font-bold">{{ total_entries }}</p>
+                <p class="text-sm">Total Logs</p>
+            </div>
+            
+            <div class="bg-purple-50 dark:bg-purple-900 p-4 rounded text-center">
+                <p class="text-2xl font-bold">{{ total_intake }}L</p>
+                <p class="text-sm">Total Water</p>
+            </div>
+        </div>
+        
+        <h3 class="text-lg font-medium mb-3">Recent Activity</h3>
+        <div class="overflow-x-auto">
+            <table class="w-full text-sm responsive-table">
+                <thead>
+                    <tr>
+                        <th class="px-2 py-1 text-left">Date</th>
+                        <th class="px-2 py-1 text-left">Amount</th>
+                        <th class="px-2 py-1 text-left">Goal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for entry in recent_entries %}
+                    <tr>
+                        <td class="border px-2 py-1 text-xs">{{ entry.date.strftime('%m-%d') }}</td>
+                        <td class="border px-2 py-1 text-xs">{{ entry.amount }}ml</td>
+                        <td class="border px-2 py-1 text-center">
+                            {% if entry.amount >= current_user.daily_goal %}
+                                <span class="text-green-600">✓</span>
+                            {% else %}
+                                <span class="text-red-600">✗</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

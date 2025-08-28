@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+{% block title %}Export Data - Hydratr{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto">
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mb-6">
+        <h1 class="text-2xl font-bold mb-6">Export Your Data</h1>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="bg-blue-50 dark:bg-blue-900 p-6 rounded-lg">
+                <div class="flex items-center mb-4">
+                    <svg class="w-8 h-8 mr-3 text-blue-500" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M8.5 6.5a.5.5 0 0 0-1 0v3.793L6.354 9.146a.5.5 0 1 0-.708.708l2 2a.5.5 0 0 0 .708 0l2-2a.5.5 0 0 0-.708-.708L8.5 10.293V6.5z"/>
+                        <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z"/>
+                    </svg>
+                    <h2 class="text-xl font-semibold">PDF Report</h2>
+                </div>
+                <p class="text-gray-600 dark:text-gray-300 mb-4">
+                    Download a beautiful PDF report of your hydration history with charts and statistics.
+                </p>
+                <a href="{{ url_for('export.export_pdf') }}" class="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded inline-block">
+                    Download PDF
+                </a>
+            </div>
+            
+            <div class="bg-green-50 dark:bg-green-900 p-6 rounded-lg">
+                <div class="flex items-center mb-4">
+                    <svg class="w-8 h-8 mr-3 text-green-500" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M6 8a.5.5 0 0 0 .5.5h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L12.293 7.5H6.5A.5.5 0 0 0 6 8zm-2.5 7a.5.5 0 0 1-.5-.5v-13a.5.5 0 0 1 1 0v13a.5.5 0 0 1-.5.5z"/>
+                    </svg>
+                    <h2 class="text-xl font-semibold">JSON Data</h2>
+                </div>
+                <p class="text-gray-600 dark:text-gray-300 mb-4">
+                    Export your raw hydration data in JSON format for analysis or use in other applications.
+                </p>
+                <a href="{{ url_for('export.export_json') }}" class="bg-green-500 hover:bg-green-600 text-white font-medium py-2 px-4 rounded inline-block">
+                    Download JSON
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+        <h2 class="text-xl font-bold mb-4">Export Options</h2>
+        
+        <form method="GET" action="{{ url_for('export.export_pdf') }}" class="mb-6">
+            <div class="mb-4">
+                <label class="block text-sm font-medium mb-2">Date Range</label>
+                <div class="flex space-x-4">
+                    <div>
+                        <label class="block text-sm mb-1">From</label>
+                        <input type="date" name="start_date" class="p-2 border border-gray-300 dark:border-gray-600 rounded dark:bg-gray-700">
+                    </div>
+                    <div>
+                        <label class="block text-sm mb-1">To</label>
+                        <input type="date" name="end_date" class="p-2 border border-gray-300 dark:border-gray-600 rounded dark:bg-gray-700">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mb-4">
+                <label class="block text-sm font-medium mb-2">Include in Report</label>
+                <div class="space-y-2">
+                    <label class="flex items-center">
+                        <input type="checkbox" name="include_charts" checked class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                        <span class="ml-2">Charts and Graphs</span>
+                    </label>
+                    <label class="flex items-center">
+                        <input type="checkbox" name="include_stats" checked class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                        <span class="ml-2">Statistics</span>
+                    </label>
+                    <label class="flex items-center">
+                        <input type="checkbox" name="include_details" checked class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                        <span class="ml-2">Daily Details</span>
+                    </label>
+                </div>
+            </div>
+            
+            <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded">
+                Generate Custom Report
+            </button>
+        </form>
+        
+        <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded">
+            <h3 class="font-medium mb-2">About Data Export</h3>
+            <p class="text-sm text-gray-600 dark:text-gray-300">
+                Your data is exported in a format that preserves your privacy. The PDF report includes visualizations
+                of your hydration patterns, while the JSON export provides raw data that can be imported into
+                other applications or used for personal analysis.
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,723 @@
+/* ================================================ */
+/* Hydratr Custom Styles - Full ~300 Lines         */
+/* ================================================ */
+
+/* === Fonts & Base === */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+body {
+    font-family: 'Inter', sans-serif;
+    transition: background 0.3s, color 0.3s;
+    background: #f0f9ff;
+    color: #1e293b;
+    min-height: 100vh;
+}
+
+.dark body {
+    background: #0f172a;
+    color: #e2e8f0;
+}
+
+/* === Links === */
+a {
+    transition: color 0.3s ease;
+}
+a:hover {
+    color: #3b82f6;
+}
+
+/* === Buttons === */
+.btn-primary {
+    background: linear-gradient(135deg,#3b82f6,#06b6d4);
+    color: #fff;
+    border-radius: 0.75rem;
+    padding: 0.6rem 1.2rem;
+    font-weight: 600;
+    box-shadow: 0 4px 12px rgba(59,130,246,0.35);
+    transition: all 0.25s ease;
+}
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(59,130,246,0.45);
+}
+
+.btn-secondary {
+    background: #f1f5f9;
+    color: #334155;
+    border-radius: 0.75rem;
+    padding: 0.6rem 1.2rem;
+    font-weight: 500;
+    transition: all 0.25s ease;
+}
+.btn-secondary:hover {
+    background: #e2e8f0;
+    color: #1e293b;
+}
+
+/* === Glass Cards & Hover === */
+.glass-effect {
+    background: rgba(255,255,255,0.25);
+    backdrop-filter: blur(10px);
+    border-radius: 1rem;
+    border: 1px solid rgba(255,255,255,0.18);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+.glass-effect:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.1);
+}
+.dark .glass-effect {
+    background: rgba(0,0,0,0.25);
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+/* === Water Cards === */
+.water-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.water-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+/* === Progress Bar === */
+.progress-bar {
+    height: 12px;
+    border-radius: 999px;
+    background: linear-gradient(90deg,#3b82f6,#06b6d4);
+    transition: width 1s ease-in-out;
+}
+
+/* === Animations === */
+.fade-in {
+    animation: fadeIn 0.5s ease-in forwards;
+}
+@keyframes fadeIn {
+    from {opacity:0; transform: translateY(10px);}
+    to {opacity:1; transform: translateY(0);}
+}
+
+.slide-up {
+    animation: slideUp 0.3s ease-out forwards;
+}
+@keyframes slideUp {
+    from {transform: translateY(10px); opacity:0;}
+    to {transform: translateY(0); opacity:1;}
+}
+
+.wave-animation {
+    background: linear-gradient(90deg,#3b82f6,#60a5fa,#3b82f6);
+    background-size: 200% 100%;
+    animation: wave 3s infinite linear;
+}
+@keyframes wave {
+    0% { background-position:0% 50%; }
+    100% { background-position:200% 50%; }
+}
+
+/* === Tables === */
+.responsive-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+.responsive-table th,
+.responsive-table td {
+    padding: 1rem;
+    text-align: left;
+}
+.responsive-table th {
+    background: #e0f2fe;
+    font-weight: 600;
+}
+.responsive-table td {
+    border-top: 1px solid #bae6fd;
+}
+.dark .responsive-table th {
+    background: #1e293b;
+    color: #e2e8f0;
+}
+.dark .responsive-table td {
+    border-top: 1px solid #334155;
+}
+
+/* === Scrollbars === */
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+.dark ::-webkit-scrollbar-track {
+    background: #1e293b;
+}
+.dark ::-webkit-scrollbar-thumb {
+    background: #4b5563;
+}
+.dark ::-webkit-scrollbar-thumb:hover {
+    background: #6b7280;
+}
+
+/* === Spinner === */
+.spinner {
+    border: 2px solid #f3f3f3;
+    border-top: 2px solid #3b82f6;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    animation: spin 1s linear infinite;
+    display: inline-block;
+}
+@keyframes spin {
+    0% { transform: rotate(0deg);}
+    100% { transform: rotate(360deg);}
+}
+
+/* === Text Utilities === */
+.text-truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.shadow-hover {
+    transition: box-shadow 0.2s;
+}
+.shadow-hover:hover {
+    box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1),
+                0 4px 6px -2px rgba(0,0,0,0.05);
+}
+
+/* === Card/Chart Containers === */
+.chart-container {
+    position: relative;
+    width: 100%;
+    height: 300px;
+}
+@media (max-width: 768px) {
+    .chart-container {
+        height: 250px;
+    }
+}
+
+/* Smooth chart animation */
+canvas {
+    transition: all 0.3s ease;
+}
+.dark canvas {
+    filter: brightness(0.9);
+}
+
+/* === Responsive Helpers === */
+@media (max-width: 768px) {
+    .mobile-padding {
+        padding: 1rem;
+    }
+    .mobile-stack {
+        flex-direction: column;
+    }
+}
+
+/* === Print Styles === */
+@media print {
+    .no-print { display: none !important; }
+    body { background: white !important; color: black !important; }
+    .card { box-shadow: none; border: 1px solid #e5e7eb; }
+}
+
+/* === Footer & Nav Shadows === */
+nav, footer {
+    transition: background 0.3s, box-shadow 0.3s;
+}
+nav {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+footer {
+    box-shadow: inset 0 1px 0 rgba(0,0,0,0.05);
+}
+
+/* === Misc Helpers === */
+.rounded-lg { border-radius: 0.75rem; }
+.rounded-full { border-radius: 9999px; }
+.mb-4 { margin-bottom: 1rem; }
+.p-4 { padding: 1rem; }
+
+/* ================================================ */
+/* END OF HYDRATR CUSTOM CSS ~300+ lines           */
+/* ================================================ */
+
+
+/* ================================================ */
+/* WATER REMINDER NOTIFICATION SYSTEM              */
+/* ================================================ */
+
+/* Notification Container */
+.water-notification {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 9999;
+    max-width: 320px;
+    min-width: 280px;
+    padding: 16px 20px;
+    
+    /* Glassmorphism Effect */
+    background: rgba(59, 130, 246, 0.15);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(59, 130, 246, 0.2);
+    border-radius: 16px;
+    box-shadow: 
+        0 8px 32px rgba(59, 130, 246, 0.1),
+        0 4px 16px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    
+    /* Animation Properties */
+    opacity: 0;
+    transform: translateX(100%) scale(0.8);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    pointer-events: none;
+}
+
+/* Dark Mode Notification */
+.dark .water-notification {
+    background: rgba(6, 182, 212, 0.15);
+    border: 1px solid rgba(6, 182, 212, 0.25);
+    box-shadow: 
+        0 8px 32px rgba(6, 182, 212, 0.15),
+        0 4px 16px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+/* Show Animation */
+.water-notification.show {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+    pointer-events: auto;
+}
+
+/* Hide Animation */
+.water-notification.hide {
+    opacity: 0;
+    transform: translateX(100%) scale(0.8);
+    pointer-events: none;
+}
+
+/* Notification Content */
+.notification-content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.notification-icon {
+    width: 32px;
+    height: 32px;
+    background: linear-gradient(135deg, #3b82f6, #06b6d4);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    animation: pulse-icon 2s infinite;
+}
+
+.notification-icon svg {
+    width: 18px;
+    height: 18px;
+    color: white;
+}
+
+.notification-text {
+    flex: 1;
+}
+
+.notification-title {
+    font-weight: 600;
+    font-size: 14px;
+    color: #1e293b;
+    margin-bottom: 2px;
+    line-height: 1.2;
+}
+
+.notification-message {
+    font-size: 13px;
+    color: #64748b;
+    line-height: 1.3;
+}
+
+.dark .notification-title {
+    color: #e2e8f0;
+}
+
+.dark .notification-message {
+    color: #94a3b8;
+}
+
+/* Close Button */
+.notification-close {
+    width: 20px;
+    height: 20px;
+    background: rgba(0, 0, 0, 0.1);
+    border: none;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+    opacity: 0.7;
+}
+
+.notification-close:hover {
+    background: rgba(0, 0, 0, 0.2);
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+.notification-close svg {
+    width: 12px;
+    height: 12px;
+    color: #64748b;
+}
+
+.dark .notification-close svg {
+    color: #94a3b8;
+}
+
+/* Icon Pulse Animation */
+@keyframes pulse-icon {
+    0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4);
+    }
+    50% {
+        transform: scale(1.05);
+        box-shadow: 0 0 0 8px rgba(59, 130, 246, 0);
+    }
+}
+
+/* Progress Bar for Auto-dismiss */
+.notification-progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #3b82f6, #06b6d4);
+    border-radius: 0 0 16px 16px;
+    transform-origin: left;
+    animation: progress-countdown 5s linear forwards;
+}
+
+@keyframes progress-countdown {
+    from {
+        transform: scaleX(1);
+    }
+    to {
+        transform: scaleX(0);
+    }
+}
+
+/* Mobile Responsive */
+@media (max-width: 640px) {
+    .water-notification {
+        bottom: 16px;
+        right: 16px;
+        left: 16px;
+        max-width: none;
+        min-width: auto;
+    }
+}
+
+/* Hover Effects */
+.water-notification:hover .notification-progress {
+    animation-play-state: paused;
+}
+
+.water-notification:hover {
+    transform: translateX(0) scale(1.02);
+    box-shadow: 
+        0 12px 40px rgba(59, 130, 246, 0.15),
+        0 6px 20px rgba(0, 0, 0, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.dark .water-notification:hover {
+    box-shadow: 
+        0 12px 40px rgba(6, 182, 212, 0.2),
+        0 6px 20px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+/* ================================================ */
+/* END WATER REMINDER NOTIFICATION SYSTEM          */
+/* ================================================ */
+
+
+/* ================================================ */
+/* ENHANCED FEATURES & POLISH                       */
+/* ================================================ */
+
+/* Enhanced Hover Effects */
+.enhanced-hover {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.enhanced-hover:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Floating Action Button */
+.floating-action {
+    position: fixed;
+    bottom: 80px;
+    right: 20px;
+    width: 56px;
+    height: 56px;
+    background: linear-gradient(135deg, #3b82f6, #06b6d4);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 20px rgba(59, 130, 246, 0.4);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 1000;
+    border: none;
+}
+
+.floating-action:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 25px rgba(59, 130, 246, 0.5);
+}
+
+.floating-action svg {
+    width: 24px;
+    height: 24px;
+    color: white;
+}
+
+/* Achievement Badges */
+.achievement-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 8px;
+    background: linear-gradient(135deg, #fbbf24, #f59e0b);
+    color: white;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+    animation: badge-glow 2s infinite alternate;
+}
+
+@keyframes badge-glow {
+    0% { box-shadow: 0 0 5px rgba(251, 191, 36, 0.5); }
+    100% { box-shadow: 0 0 15px rgba(251, 191, 36, 0.8); }
+}
+
+/* Streak Counter Animation */
+.streak-counter {
+    position: relative;
+    overflow: hidden;
+}
+
+.streak-counter::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    animation: streak-shine 3s infinite;
+}
+
+@keyframes streak-shine {
+    0% { left: -100%; }
+    100% { left: 100%; }
+}
+
+/* Loading States */
+.loading-skeleton {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: loading-shimmer 1.5s infinite;
+}
+
+.dark .loading-skeleton {
+    background: linear-gradient(90deg, #374151 25%, #4b5563 50%, #374151 75%);
+    background-size: 200% 100%;
+}
+
+@keyframes loading-shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+}
+
+/* Success Animations */
+.success-pulse {
+    animation: success-pulse 0.6s ease-out;
+}
+
+@keyframes success-pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+/* Micro-interactions */
+.micro-bounce {
+    transition: transform 0.2s ease;
+}
+
+.micro-bounce:active {
+    transform: scale(0.95);
+}
+
+/* Enhanced Progress Bar */
+.enhanced-progress {
+    position: relative;
+    overflow: hidden;
+}
+
+.enhanced-progress::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.3) 50%, transparent 70%);
+    animation: progress-shine 2s infinite;
+}
+
+@keyframes progress-shine {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+/* Tooltip Enhancement */
+.enhanced-tooltip {
+    position: relative;
+}
+
+.enhanced-tooltip::before {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.9);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 1000;
+}
+
+.enhanced-tooltip:hover::before {
+    opacity: 1;
+}
+
+/* Card Stack Effect */
+.card-stack {
+    position: relative;
+}
+
+.card-stack::before,
+.card-stack::after {
+    content: '';
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    right: -4px;
+    bottom: -4px;
+    background: inherit;
+    border-radius: inherit;
+    z-index: -1;
+    opacity: 0.7;
+}
+
+.card-stack::after {
+    top: 8px;
+    left: 8px;
+    right: -8px;
+    bottom: -8px;
+    opacity: 0.4;
+}
+
+/* Gradient Text */
+.gradient-text {
+    background: linear-gradient(135deg, #3b82f6, #06b6d4);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Enhanced Mobile Responsiveness */
+@media (max-width: 640px) {
+    .floating-action {
+        bottom: 20px;
+        right: 16px;
+        width: 48px;
+        height: 48px;
+    }
+    
+    .floating-action svg {
+        width: 20px;
+        height: 20px;
+    }
+    
+    .water-notification {
+        bottom: 16px;
+        right: 16px;
+        left: 16px;
+        max-width: none;
+    }
+}
+
+/* Dark Mode Enhancements */
+.dark .enhanced-hover:hover {
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+.dark .floating-action {
+    box-shadow: 0 4px 20px rgba(6, 182, 212, 0.4);
+}
+
+.dark .floating-action:hover {
+    box-shadow: 0 6px 25px rgba(6, 182, 212, 0.5);
+}
+
+/* Performance Optimizations */
+.gpu-accelerated {
+    transform: translateZ(0);
+    will-change: transform;
+}
+
+/* Focus States */
+.focus-ring:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5);
+}
+
+.dark .focus-ring:focus {
+    box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.5);
+}
+
+/* ================================================ */
+/* END ENHANCED FEATURES & POLISH                   */
+/* ================================================ */
+
