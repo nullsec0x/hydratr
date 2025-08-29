@@ -1,46 +1,31 @@
-#!/usr/bin/env bash
-set -euo pipefail
-IFS=$'\n\t'
+echo "Starting process..."
 
-PORT="${1:-}"
-
-if [ -z "$PORT" ]; then
-  echo "Usage: $0 <PORT>"
+if [ "$#" -ne 1 ]; then
+  echo "Parameter required PORT"
   exit 1
 fi
 
-command -v python3 >/dev/null 2>&1 || { echo "python3 not found"; exit 1; }
+PORT="$1"
 
-if [ ! -d "venv" ]; then
-  python3 -m venv venv
+if ! [[ "$PORT" =~ ^[0-9]+$ ]]; then
+  echo "PORT must be a non-negative integer."
+  exit 1
 fi
 
-
-source venv/bin/activate
-
-python3 -m pip install --upgrade pip setuptools wheel
-
-if [ -f requirements.txt ]; then
-  pip install -r requirements.txt
+PIDS=$(timeout 2s lsof -ti ":$PORT")
+if [ -n "$PIDS" ]; then
+  kill -9 $PIDS
 fi
 
-if [ -f init_db.py ]; then
-
-  if [ ! -f instance.db ]; then
-    echo "running init_db.py..."
-    python3 init_db.py || true
-  else
-    echo "instance.db found — skipping init_db.py"
-  fi
+if ! git pull; then
+  echo "git pull failed"
+  exit 1
 fi
 
-export FLASK_ENV=production
-export PORT="$PORT"
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+python3 init_db.py
 
-if command -v gunicorn >/dev/null 2>&1 ; then
-  echo "starting gunicorn on 127.0.0.1:$PORT"
-  exec gunicorn --workers 3 --bind "127.0.0.1:${PORT}" app:app
-else
-  echo "gunicorn not found; falling back to python app.py (dev server) on port $PORT"
-  exec python3 app.py --port "$PORT" || exec python3 app.py
-fi
+# Start the Flask app using Gunicorn on the specified port
+gunicorn -b ":$PORT" app:app
