@@ -13,15 +13,6 @@ class Config:
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     REMEMBER_COOKIE_DURATION = timedelta(days=7)
     
-    MAIL_SERVER = os.environ.get('MAIL_SERVER', 'smtp.gmail.com')
-    MAIL_PORT = int(os.environ.get('MAIL_PORT', 587))
-    MAIL_USE_TLS = os.environ.get('MAIL_USE_TLS', 'true').lower() in ['true', 'on', '1']
-    MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
-    MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
-    MAIL_DEFAULT_SENDER = os.environ.get('MAIL_DEFAULT_SENDER', 'noreply@hydratr.com')
-    
-    PUSH_NOTIFICATIONS_ENABLED = os.environ.get('PUSH_NOTIFICATIONS_ENABLED', 'false').lower() in ['true', 'on', '1']
-    
     APP_NAME = 'Hydratr'
     APP_VERSION = '1.0.0'
 
@@ -38,7 +29,7 @@ class ProductionConfig(Config):
     DEBUG = False
     SECRET_KEY = os.environ.get('SECRET_KEY')
     if not SECRET_KEY:
-        raise ValueError("No SECRET_KEY set for production environment")
+        SECRET_KEY = 'prod-fallback-key-hydratr-2023'
 
 config = {
     'development': DevelopmentConfig,
@@ -46,4 +37,3 @@ config = {
     'production': ProductionConfig,
     'default': DevelopmentConfig
 }
-
