@@ -1,100 +1,105 @@
-# Hydratr - Water Intake Tracker
+# Hydratr — Water Intake Tracker
 
-A modern, responsive web application for tracking daily water intake and maintaining hydration goals.
+a small, responsive web app to help you actually drink water. built for people who forget to hydrate between coding sprints, meetings, and bad playlist decisions.
 
-## Features
+---
 
-- **Daily Water Logging**: Track your water intake throughout the day with customizable amounts
-- **Progress Visualization**: Real-time progress bars and weekly charts to monitor your hydration habits
-- **Goal Setting**: Set personalized daily hydration goals
-- **Streak Tracking**: Monitor consecutive days of meeting your hydration goals
-- **Quick Log Options**: Fast logging with preset amounts (250ml, 500ml, 1L, 1.5L)
-- **Responsive Design**: Works seamlessly on desktop and mobile devices
-- **Data Export**: Export your hydration data as PDF reports or JSON
-- **Smart Notifications**: Gentle reminders to stay hydrated throughout the day
+## why this exists
 
-## Technology Stack
+i made Hydratr because i kept forgetting to drink water during long coding sessions. it’s simple by design — no pressure, just an easy way to log sips, see progress, and keep a streak going.
 
-- **Backend**: Flask (Python)
-- **Database**: SQLite with SQLAlchemy ORM
-- **Frontend**: HTML5, CSS3 (Tailwind CSS), JavaScript
-- **Charts**: Chart.js for data visualization
-- **Authentication**: Flask-Login for user sessions
-- **PDF Generation**: ReportLab for export functionality
+---
 
-## Installation
+## features
 
-1. Clone the repository
-2. Install dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
-3. Initialize the database:
-   ```bash
-   python init_db.py
-   ```
-4. Run the application:
-   ```bash
-   python app.py
-   ```
+- **Daily logging** — log custom amounts or use quick presets (250ml, 500ml, 1L, 1.5L).
+- **Progress visualization** — realtime progress bar + weekly charts.
+- **Personal goals** — set a daily hydration goal.
+- **Streaks** — track consecutive hydrated days.
+- **Responsive UI** — works on desktop + mobile.
+- **Export options** — PDF or JSON.
+- **Gentle notifications** — reminders without nagging.
 
-The application will be available at `http://localhost:5001`
+---
 
-## Usage
+## tech stack
 
-1. **Sign Up**: Create a new account or log in with existing credentials
-2. **Set Goals**: Configure your daily hydration goal in the profile settings
-3. **Log Water**: Use the input form or quick log buttons to record water intake
-4. **Track Progress**: Monitor your daily progress and weekly trends
-5. **Export Data**: Generate PDF reports or export data as JSON
+- **Backend**: Flask (Python)  
+- **Database**: SQLite + SQLAlchemy  
+- **Frontend**: HTML5 + Tailwind CSS + vanilla JS  
+- **Charts**: Chart.js  
+- **Auth**: Flask-Login  
+- **PDF Export**: ReportLab
 
-## Project Structure
+---
 
-```
-hydratr-enhanced/
-├── app.py                 # Main Flask application
-├── config.py             # Configuration settings
-├── models.py             # Database models
-├── requirements.txt      # Python dependencies
-├── routes/               # Route handlers
-│   ├── auth.py          # Authentication routes
-│   ├── dashboard.py     # Main dashboard functionality
-│   └── export.py        # Data export features
-├── static/              # Static assets
-│   ├── css/            # Stylesheets
-│   ├── js/             # JavaScript files
-│   └── icons/          # Application icons
-├── templates/           # HTML templates
-├── utils/              # Utility functions
-└── instance/           # Database and uploads
+## quick start
+
+**requirements**: python 3.10+, pip, git
+
+```bash
+git clone https://github.com/<your-username>/hydratr-enhanced.git
+cd hydratr-enhanced
+
+python -m venv venv
+source venv/bin/activate     # mac/linux
+venv\Scripts\activate      # windows
+
+pip install -r requirements.txt
+mkdir -p instance
+python init_db.py
+python app.py
 ```
 
-## Configuration
+the app runs at `http://localhost:5001`
 
-The application supports multiple environments through configuration classes:
+---
 
-- **Development**: Debug mode enabled, verbose logging
-- **Testing**: In-memory database, CSRF disabled
-- **Production**: Optimized for deployment
+## environment (example)
 
-Environment variables:
-- `FLASK_CONFIG`: Set to 'development', 'testing', or 'production'
-- `SECRET_KEY`: Application secret key for sessions
-- `DATABASE_URL`: Database connection string
+```env
+FLASK_CONFIG=development
+SECRET_KEY=dev-secret-change-me
+DATABASE_URL=sqlite:///instance/hydratr.db
+PORT=5001
+```
 
-## Contributing
+---
 
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Test thoroughly
-5. Submit a pull request
+## usage
 
-## License
+1. sign up / log in  
+2. set your daily goal  
+3. log water with the form or quick buttons  
+4. track progress + streaks  
+5. export if needed  
 
-This project is licensed under the MIT License.
+---
 
-## Support
+## project structure
 
-For issues or questions, please create an issue in the repository or contact the development team.
+```
+hydratr/
+├── app.py
+├── config.py
+├── models.py
+├── requirements.txt
+├── routes/
+│   ├── auth.py
+│   ├── dashboard.py
+│   └── export.py
+├── static/
+├── templates/
+├── utils/
+└── instance/
+```
 
+---
+
+## contributing
+
+1. fork the repo  
+2. create a branch  
+3. make your change  
+4. test it  
+5. open a PR  
