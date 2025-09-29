@@ -1,94 +1,83 @@
-/* ================================================ */
-/* Hydratr Custom Styles - Full ~300 Lines         */
-/* ================================================ */
-
-/* === Fonts & Base === */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
 body {
     font-family: 'Inter', sans-serif;
-    transition: background 0.3s, color 0.3s;
-    background: #f0f9ff;
-    color: #1e293b;
+    background: #e6fdfc;
+    color: #0f2f36;
     min-height: 100vh;
+    transition: background 0.3s, color 0.3s;
 }
 
 .dark body {
-    background: #0f172a;
-    color: #e2e8f0;
+    background: #0a1922;
+    color: #d2f3f3;
 }
 
-/* === Links === */
 a {
     transition: color 0.3s ease;
 }
 a:hover {
-    color: #3b82f6;
+    color: #00b3a4;
 }
 
-/* === Buttons === */
 .btn-primary {
-    background: linear-gradient(135deg,#3b82f6,#06b6d4);
+    background: linear-gradient(135deg,#00c4b6,#36e0e0);
     color: #fff;
     border-radius: 0.75rem;
     padding: 0.6rem 1.2rem;
     font-weight: 600;
-    box-shadow: 0 4px 12px rgba(59,130,246,0.35);
+    box-shadow: 0 4px 12px rgba(0,196,182,0.35);
     transition: all 0.25s ease;
 }
 .btn-primary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(59,130,246,0.45);
+    box-shadow: 0 6px 16px rgba(0,196,182,0.45);
 }
 
 .btn-secondary {
-    background: #f1f5f9;
-    color: #334155;
+    background: #f3fbfb;
+    color: #134043;
     border-radius: 0.75rem;
     padding: 0.6rem 1.2rem;
     font-weight: 500;
     transition: all 0.25s ease;
 }
 .btn-secondary:hover {
-    background: #e2e8f0;
-    color: #1e293b;
+    background: #dff9f8;
+    color: #0f2f36;
 }
 
-/* === Glass Cards & Hover === */
 .glass-effect {
     background: rgba(255,255,255,0.25);
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(12px);
     border-radius: 1rem;
-    border: 1px solid rgba(255,255,255,0.18);
+    border: 1px solid rgba(255,255,255,0.15);
     transition: transform 0.3s, box-shadow 0.3s;
 }
 .glass-effect:hover {
     transform: translateY(-4px);
-    box-shadow: 0 12px 28px rgba(0,0,0,0.1);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.12);
 }
 .dark .glass-effect {
-    background: rgba(0,0,0,0.25);
-    border: 1px solid rgba(255,255,255,0.1);
+    background: rgba(0,0,0,0.3);
+    border: 1px solid rgba(255,255,255,0.08);
 }
 
-/* === Water Cards === */
 .water-card {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 .water-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.12);
 }
 
-/* === Progress Bar === */
 .progress-bar {
     height: 12px;
     border-radius: 999px;
-    background: linear-gradient(90deg,#3b82f6,#06b6d4);
+    background: linear-gradient(90deg,#00c4b6,#36e0e0);
     transition: width 1s ease-in-out;
 }
 
-/* === Animations === */
 .fade-in {
     animation: fadeIn 0.5s ease-in forwards;
 }
@@ -106,7 +95,7 @@ a:hover {
 }
 
 .wave-animation {
-    background: linear-gradient(90deg,#3b82f6,#60a5fa,#3b82f6);
+    background: linear-gradient(90deg,#00c4b6,#6ef2f2,#00c4b6);
     background-size: 200% 100%;
     animation: wave 3s infinite linear;
 }
@@ -115,7 +104,6 @@ a:hover {
     100% { background-position:200% 50%; }
 }
 
-/* === Tables === */
 .responsive-table {
     width: 100%;
     border-collapse: collapse;
@@ -126,48 +114,46 @@ a:hover {
     text-align: left;
 }
 .responsive-table th {
-    background: #e0f2fe;
+    background: #d7f7f6;
     font-weight: 600;
 }
 .responsive-table td {
-    border-top: 1px solid #bae6fd;
+    border-top: 1px solid #b0ecea;
 }
 .dark .responsive-table th {
-    background: #1e293b;
-    color: #e2e8f0;
+    background: #0f2f36;
+    color: #d2f3f3;
 }
 .dark .responsive-table td {
-    border-top: 1px solid #334155;
+    border-top: 1px solid #1f3f45;
 }
 
-/* === Scrollbars === */
 ::-webkit-scrollbar {
     width: 8px;
 }
 ::-webkit-scrollbar-track {
-    background: #f1f1f1;
+    background: #eefcfc;
 }
 ::-webkit-scrollbar-thumb {
-    background: #cbd5e1;
+    background: #a5e4e1;
     border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-    background: #94a3b8;
+    background: #6bd9d3;
 }
 .dark ::-webkit-scrollbar-track {
-    background: #1e293b;
+    background: #0f2f36;
 }
 .dark ::-webkit-scrollbar-thumb {
-    background: #4b5563;
+    background: #2f6c72;
 }
 .dark ::-webkit-scrollbar-thumb:hover {
-    background: #6b7280;
+    background: #4ca6a6;
 }
 
-/* === Spinner === */
 .spinner {
     border: 2px solid #f3f3f3;
-    border-top: 2px solid #3b82f6;
+    border-top: 2px solid #00c4b6;
     border-radius: 50%;
     width: 20px;
     height: 20px;
@@ -179,7 +165,6 @@ a:hover {
     100% { transform: rotate(360deg);}
 }
 
-/* === Text Utilities === */
 .text-truncate {
     overflow: hidden;
     text-overflow: ellipsis;
@@ -190,11 +175,10 @@ a:hover {
     transition: box-shadow 0.2s;
 }
 .shadow-hover:hover {
-    box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1),
-                0 4px 6px -2px rgba(0,0,0,0.05);
+    box-shadow: 0 10px 15px -3px rgba(0,0,0,0.12),
+                0 4px 6px -2px rgba(0,0,0,0.08);
 }
 
-/* === Card/Chart Containers === */
 .chart-container {
     position: relative;
     width: 100%;
@@ -205,8 +189,6 @@ a:hover {
         height: 250px;
     }
 }
-
-/* Smooth chart animation */
 canvas {
     transition: all 0.3s ease;
 }
@@ -214,7 +196,6 @@ canvas {
     filter: brightness(0.9);
 }
 
-/* === Responsive Helpers === */
 @media (max-width: 768px) {
     .mobile-padding {
         padding: 1rem;
@@ -224,14 +205,12 @@ canvas {
     }
 }
 
-/* === Print Styles === */
 @media print {
     .no-print { display: none !important; }
     body { background: white !important; color: black !important; }
     .card { box-shadow: none; border: 1px solid #e5e7eb; }
 }
 
-/* === Footer & Nav Shadows === */
 nav, footer {
     transition: background 0.3s, box-shadow 0.3s;
 }
@@ -242,12 +221,7 @@ footer {
     box-shadow: inset 0 1px 0 rgba(0,0,0,0.05);
 }
 
-/* === Misc Helpers === */
 .rounded-lg { border-radius: 0.75rem; }
 .rounded-full { border-radius: 9999px; }
 .mb-4 { margin-bottom: 1rem; }
 .p-4 { padding: 1rem; }
-
-/* ================================================ */
-/* END OF HYDRATR CUSTOM CSS ~300+ lines           */
-/* ================================================ */
